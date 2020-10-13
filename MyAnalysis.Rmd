@@ -1,0 +1,72 @@
+---
+title: "Chick Weight Analysis"
+author: "*Aljohara Almedlej*"
+date: "*03.10.2020*"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(knitr)
+library(tidyverse)
+library(Hmisc)
+library(agricolae)
+library(DT)
+
+```
+
+## Descriptive Statistics
+
+```{r chickwts, echo= FALSE}
+chickTable <- chickwts %>% 
+            group_by(feed) %>%
+             summarise(n = length(feed),
+            Average = mean(weight), 
+            SD = sd(weight))
+datatable(chickTable)
+
+```
+
+## Plots
+
+
+```{r chickwts1, echo=FALSE}
+ggplot(chickwts, aes(feed,weight)) +
+  geom_boxplot()
+```
+
+
+```{r chickwts2, echo=FALSE}
+ggplot(chickwts, aes(feed,weight)) +
+   geom_jitter(width = 1) +
+  stat_summary(fun.data = mean_sdl, 
+               fun.args = list(mult = 1), 
+               col = "red") 
+```
+
+## Inferential Statistics
+The one-way ANOVA summary:
+
+```{r chickwts3, echo=FALSE}
+chickTable_lm <- lm(weight ~ feed, data = chickwts)
+
+chicklm_anova <- anova(chickTable_lm)
+kable(chicklm_anova)
+```
+Tukey’s Post-hoc test:
+
+
+```{r chickwts4, echo=FALSE}
+chickwts.av <- aov(weight ~ feed, data= chickwts)
+tukeyTest <- TukeyHSD(chickwts.av)
+
+
+
+datatable(tukeyTest$feed) # tukeyTest is not a data frame we have to dig in deep
+
+
+
+
+```
+
+
