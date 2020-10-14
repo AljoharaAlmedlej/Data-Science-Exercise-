@@ -8,3 +8,4 @@ Previous files that was worked and practiced on have been pushed into this repos
 # New Dataset Analysis
 
 My own analysis work on Chess dataset
+NOT DONE, STILL WORKING ON IT AND EXPLORING

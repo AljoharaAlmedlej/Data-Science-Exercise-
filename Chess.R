@@ -9,7 +9,8 @@ library(tidyverse)
 chess <- read_csv("data/games.csv")
 chess
 
-# the number of games being analyzed
-numOfgames <- nrow(chess)
-numOfgames
+# show dataset as tibble
+chess <- as_tibble(chess)
+chess
+
 
