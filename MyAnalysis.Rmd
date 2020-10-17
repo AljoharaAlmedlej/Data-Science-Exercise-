@@ -5,7 +5,7 @@ date: "*03.10.2020*"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(knitr)
 library(tidyverse)
@@ -19,10 +19,11 @@ library(DT)
 
 ```{r chickwts, echo= FALSE}
 chickTable <- chickwts %>% 
-            group_by(feed) %>%
+            group_by(feed) %>% 
              summarise(n = length(feed),
-            Average = mean(weight), 
-            SD = sd(weight))
+                       Average = mean(weight), 
+                       SD = sd(weight),
+                       .groups = 'drop')
 datatable(chickTable)
 
 ```
@@ -41,7 +42,10 @@ ggplot(chickwts, aes(feed,weight)) +
    geom_jitter(width = 1) +
   stat_summary(fun.data = mean_sdl, 
                fun.args = list(mult = 1), 
-               col = "red") 
+               col = "red")
+
+
+           
 ```
 
 ## Inferential Statistics
@@ -60,11 +64,13 @@ Tukey’s Post-hoc test:
 chickwts.av <- aov(weight ~ feed, data= chickwts)
 tukeyTest <- TukeyHSD(chickwts.av)
 
-
-
-datatable(tukeyTest$feed) # tukeyTest is not a data frame we have to dig in deep
-
-
+TukeyTestTable <-  datatable(tukeyTest$feed, 
+  colnames = c("Group Comparison", "Difference in Means",
+  "Upper 95% Cl", "Lower 95% Cl", "Adjusted p-value"))
+          
+          
+TukeyTestTable 
+          
 
 
 ```
