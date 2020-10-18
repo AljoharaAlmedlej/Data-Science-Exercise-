@@ -9,3 +9,4 @@ Previous files that was worked and practiced on have been pushed into this repos
 
 My own analysis work on Chess dataset
 NOT DONE, STILL WORKING ON IT AND EXPLORING
+CHESS DATA WILL BE TRANSELATED INTO ANOTHER RMARKDOWN FILE

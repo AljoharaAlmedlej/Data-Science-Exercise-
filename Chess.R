@@ -104,11 +104,11 @@ winner_white
 winner_black < winner_white
 
 
-# Variance fir black winner
+# Variance for black winner
 Black_sd <- sqrt(winner_black)
 Black_sd
 
-# Variance fir white winner
+# Variance for white winner
 white_sd <- sqrt(winner_white)
 white_sd
 
