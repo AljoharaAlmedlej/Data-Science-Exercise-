@@ -4,6 +4,7 @@
 
 # Load the library
 library(tidyverse)
+library(dplyr)
 
 # Read the data
 chess <- read_csv("data/games.csv")
@@ -72,14 +73,16 @@ chess_model <- chess_lm$model
 # plots
 # catigorical 
 ggplot(chess, aes(winner)) + 
-  geom_bar(c)
+  geom_bar()
+# Conclusion: White win more
+
 
 # Another polt
+# Is the number of turns associated with the victory status? 
 ggplot(chess, aes( turns, victory_status)) +
-  geom_jitter(width = 1) +
-  stat_summary(fun.data = mean_sdl, 
-               fun.args = list(mult = 0.5), 
-               col = "blue") 
+  geom_col()
+# Conclusion: people who resign have the highest number of turns
+
 
 # Another plot
 ggplot(chess, aes( turns, winner)) +
@@ -111,6 +114,28 @@ Black_sd
 # Variance for white winner
 white_sd <- sqrt(winner_white)
 white_sd
+
+# what is the data type of last move column?
+typeof(chess$last_move_at) # double, but the data is still not clear whether it is the position of the last move of the game or the exact time
+
+
+
+# What is the most common white_ID?
+whiteID_common <- names(table(chess$white_id))[as.vector(table(chess$white_id))==max(table(chess$white_id))]  
+whiteID_common
+
+
+# What is the most common black_ID?
+blackID_common <- names(table(chess$black_id))[as.vector(table(chess$black_id))==max(table(chess$black_id))]  
+blackID_common
+
+
+# the user taranga plays a lot....
+
+# Is the first move associated with winning?
+typeof(chess$opening_eco)
+common_openingEco <- names(table(chess$opening_eco))[as.vector(table(chess$opening_eco))==max(table(chess$opening_eco))] 
+common_openingEco == (chess$victory_status == "mate") # the most common first move is not associated with the win
 
 
 
