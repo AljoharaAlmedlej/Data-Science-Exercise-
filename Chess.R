@@ -2,13 +2,29 @@
 # Aljohara Almedlej
 # 09.10.2020
 
+# Data from: https://www.kaggle.com/datasnaek/chess
+
 # Load the library
 library(tidyverse)
-library(dplyr)
+library(lubridate)
 
 # Read the data
 chess <- read_csv("data/games.csv")
 chess
+
+# What is the research question that we can answer with this data
+
+convTime <- function(x) {
+  lubridate::as_datetime(as.numeric(substr(x,1,nchar(x)-3)))
+}
+
+
+chess <- chess %>% 
+  mutate(created_at = convTime(created_at),
+         last_move_at = convTime(last_move_at),
+         time_diff = last_move_at - created_at) %>% 
+  arrange(-time_diff)
+glimpse(chess)
 
 # show dataset as tibble
 chess <- as_tibble(chess)
